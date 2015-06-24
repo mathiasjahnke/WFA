@@ -11,6 +11,12 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.*;
 
+/**
+ * how to extract coordinates from the point and polygon shapefile ???
+ * @author mjahnke
+ *
+ */
+
 @SuppressWarnings("serial")
 public class WeatherForecastApp extends PApplet{
 	
