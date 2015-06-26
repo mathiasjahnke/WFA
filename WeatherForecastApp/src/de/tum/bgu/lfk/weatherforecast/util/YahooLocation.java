@@ -32,9 +32,11 @@ public class YahooLocation {
 	}
 	
 	/**
-	 * Convenience Constructor. lat and lon as parameters the object queries for the location information 
-	 * @param lat
-	 * @param lon
+	 * Convenience Constructor. 
+	 * lat and lon as parameters the object queries for the location information 
+	 * @param lat latitude
+	 * @param lon longitude
+	 * @param p PApplet
 	 */
 	public YahooLocation(float lat, float lon, PApplet p){
 		this.p = p;
@@ -49,7 +51,7 @@ public class YahooLocation {
 	//**********Getter Setter***************
 	/**
 	 * 
-	 * @param city
+	 * @param city String
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -57,7 +59,7 @@ public class YahooLocation {
 
 	/**
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getState() {
 		return state;
@@ -65,7 +67,7 @@ public class YahooLocation {
 
 	/**
 	 * 
-	 * @param state
+	 * @param state String
 	 */
 	public void setState(String state) {
 		this.state = state;
@@ -73,7 +75,7 @@ public class YahooLocation {
 
 	/**
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getCountry() {
 		return country;
@@ -81,7 +83,7 @@ public class YahooLocation {
 
 	/**
 	 * 
-	 * @param country
+	 * @param country String
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -89,7 +91,7 @@ public class YahooLocation {
 
 	/**
 	 * 
-	 * @return
+	 * @return String
 	 */
 	public String getWoeid() {
 		return woeid;
@@ -97,7 +99,7 @@ public class YahooLocation {
 
 	/**
 	 * 
-	 * @param woeid
+	 * @param woeid String
 	 */
 	public void setWoeid(String woeid) {
 		this.woeid = woeid;
@@ -144,6 +146,7 @@ public class YahooLocation {
 	//**********Public Methods***************
 	/**
 	 * update the YhaooLocation object. retrieves the new location from geo.placefinder based on lat lon values. 
+	 * Overrides the current information.
 	 * @param lat latitude
 	 * @param lon longitude
 	 */

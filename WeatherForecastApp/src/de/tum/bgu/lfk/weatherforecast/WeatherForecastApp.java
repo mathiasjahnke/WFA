@@ -113,16 +113,17 @@ public class WeatherForecastApp extends PApplet{
 	public void mouseClicked(){
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
 		println(pv);
-		location = getLocation(pv.x, pv.y);
-		String woeid = getWoeid(location);
+		yahooLoc.update(pv.x, pv.y);
+		//location = getLocation(pv.x, pv.y);
+		//String woeid = getWoeid(location);
 		
-		weather = getWeather(woeid);
+		weather = getWeather(yahooLoc.getWoeid());
 		condition = getCondition(weather);
 		
 	
 	}
 	
-	private JSONObject getLocation(float lat, float lon){
+/*	private JSONObject getLocation(float lat, float lon){
 		
 		//build YQL query
 		String yql1 = "select * from geo.placefinder where text=\"";
@@ -154,8 +155,9 @@ public class WeatherForecastApp extends PApplet{
 
 		return obj;
 	}
+	*/
 	
-	private String getWoeid(JSONObject obj){
+/*	private String getWoeid(JSONObject obj){
 		
 		String woeid;
 		try{
@@ -171,6 +173,8 @@ public class WeatherForecastApp extends PApplet{
 		
 		return woeid;
 	}
+	
+	*/
 	
 	private JSONObject getWeather(String woeid){
 		
