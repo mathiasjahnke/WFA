@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 import org.gicentre.geomap.GeoMap;
 
+import de.tum.bgu.lfk.weatherforecast.util.YahooLocation;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -33,7 +34,11 @@ public class WeatherForecastApp extends PApplet{
 	private PFont title;
 	private PFont credits;
 	private PFont curTempAtLoc; //current temperature at location
+	private PFont locationName;
 	private String curTemp;
+	private String curLocation;
+	
+	private YahooLocation yahooLoc;
 	
 	
 	public void setup(){
@@ -54,11 +59,19 @@ public class WeatherForecastApp extends PApplet{
 		String fontName = "UniversLTStd-Light";
 		title = createFont(fontName, 30, true);
 		curTempAtLoc = createFont(fontName, 74, true);
+		locationName = createFont(fontName, 16, true);
+		
 		
 		//start location munich
-		location = getLocation(48.135125f,11.581981f);
-		String woeid = getWoeid(location);
-		weather = getWeather(woeid);
+		yahooLoc = new YahooLocation(48.135125f, 11.581981f, this);
+		curLocation = yahooLoc.getCity();
+		
+		println("newLocation: " + yahooLoc.getCountry() + " : " + yahooLoc.getState() + " : " + yahooLoc.getCity() + " : " + yahooLoc.getWoeid());
+		
+		//location = getLocation(48.135125f,11.581981f);
+		//println(location);
+		//String woeid = getWoeid(location);
+		weather = getWeather(yahooLoc.getWoeid());
 		condition = getCondition(weather);
 		
 		//web service image
