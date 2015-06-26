@@ -1,11 +1,8 @@
 package de.tum.bgu.lfk.weatherforecast;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.gicentre.geomap.GeoMap;
 
-import de.tum.bgu.lfk.weatherforecast.util.YahooLocation;
+import de.tum.bgu.lfk.weatherforecast.util.YahooWeather;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -24,9 +21,6 @@ public class WeatherForecastApp extends PApplet{
 	private GeoMap geoMapCountries;
 	private GeoMap geoMapCities;
 	
-	private JSONObject weather; // the whole weather object
-	private JSONObject location; //the location based on the mouse clicked position; the whole location object
-	
 	private JSONObject condition; //the condition extracted from weather
 	private PImage yahooImage; 
 	
@@ -38,7 +32,7 @@ public class WeatherForecastApp extends PApplet{
 	private String curTemp;
 	private String curLocation;
 	
-	private YahooLocation yahooLoc;
+	private YahooWeather yahooLoc;
 	
 	
 	public void setup(){
@@ -63,16 +57,18 @@ public class WeatherForecastApp extends PApplet{
 		
 		
 		//start location munich
-		yahooLoc = new YahooLocation(48.135125f, 11.581981f, this);
+		//yahooLoc = new YahooLocation(48.135125f, 11.581981f, this);
+		yahooLoc = new YahooWeather(48.135125f, 11.581981f, this);
 		curLocation = yahooLoc.getCity();
 		
 		println("newLocation: " + yahooLoc.getCountry() + " : " + yahooLoc.getState() + " : " + yahooLoc.getCity() + " : " + yahooLoc.getWoeid());
 		
+		
 		//location = getLocation(48.135125f,11.581981f);
 		//println(location);
 		//String woeid = getWoeid(location);
-		weather = getWeather(yahooLoc.getWoeid());
-		condition = getCondition(weather);
+		//weather = getWeather(yahooLoc.getWoeid());
+		condition = getCondition(yahooLoc.getWeather());
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
@@ -117,66 +113,13 @@ public class WeatherForecastApp extends PApplet{
 		//location = getLocation(pv.x, pv.y);
 		//String woeid = getWoeid(location);
 		
-		weather = getWeather(yahooLoc.getWoeid());
-		condition = getCondition(weather);
+		//weather = getWeather(yahooLoc.getWoeid());
+		condition = getCondition(yahooLoc.getWeather());
 		
 	
 	}
-	
-/*	private JSONObject getLocation(float lat, float lon){
 		
-		//build YQL query
-		String yql1 = "select * from geo.placefinder where text=\"";
-		//String woeid = "676757";
-		String latLon = Float.toString(lat) + "," + Float.toString(lon);
-		String yql2 = "\" AND gflags=\"R\"";
-		String query = yql1 + latLon + yql2;
-		println("loc: " + query);
-
-		//encode the YQL string for web usage
-		try{
-			query = URLEncoder.encode(query, "UTF-8");
-
-		}catch(UnsupportedEncodingException e){
-			e.printStackTrace();
-		}finally{
-
-		}
-		//println(query);
-
-		//build URL with YQL string
-		String json1 = "http://query.yahooapis.com/v1/public/yql?q=";
-		String json2 = "&format=json";
-		String json = json1 + query + json2;
-		println("loc: " + json);
-
-		//query results
-		JSONObject obj = loadJSONObject(json);
-
-		return obj;
-	}
-	*/
-	
-/*	private String getWoeid(JSONObject obj){
-		
-		String woeid;
-		try{
-			JSONObject res1 = obj.getJSONObject("query");
-			JSONObject res2 = res1.getJSONObject("results");
-			JSONObject res3 = res2.getJSONObject("Result");
-			woeid = res3.getString("woeid");
-		}catch (RuntimeException e){
-			//e.printStackTrace();
-			println("ee:" + e.getMessage());
-			woeid = "676757";
-		}
-		
-		return woeid;
-	}
-	
-	*/
-	
-	private JSONObject getWeather(String woeid){
+/*	private JSONObject getWeather(String woeid){
 		
 		//build YQL query
 		String yql1 = "select * from weather.forecast where woeid=\"";
@@ -208,6 +151,7 @@ public class WeatherForecastApp extends PApplet{
 		
 		return obj;
 	}
+	*/
 	
 	private JSONObject getCondition(JSONObject resObj){
 		JSONObject res1 = resObj.getJSONObject("query");

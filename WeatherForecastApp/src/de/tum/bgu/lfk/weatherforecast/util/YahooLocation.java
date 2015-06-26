@@ -43,12 +43,31 @@ public class YahooLocation {
 		update(lat, lon);
 	}
 
+	//**********Getter Setter***************
+	/**
+	 * 
+	 * @return PApplet
+	 */
+	public PApplet getP(){
+		return this.p;
+	}
+	
+	/**
+	 * 
+	 * @param p PApplet
+	 */
+	public void setP(PApplet p){
+		this.p = p;
+	}
+	
+	/**
+	 * 
+	 * @return String 
+	 */
 	public String getCity() {
 		return city;
 	}
 
-	
-	//**********Getter Setter***************
 	/**
 	 * 
 	 * @param city String
