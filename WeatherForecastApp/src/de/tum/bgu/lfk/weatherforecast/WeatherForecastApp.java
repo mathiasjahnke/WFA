@@ -64,7 +64,6 @@ public class WeatherForecastApp extends PApplet{
 		yahooWeather = new YahooWeather(this);
 		yahooWeather.update(11.581981f, 48.135125f);
 		curLocation = yahooWeather.getCity();
-		//clickedLocation = geoMapCountries.geoToScreen(48.135125f, 11.581981f);
 		clickedLocation = geoMapCountries.geoToScreen(11.581981f, 48.135125f);
 		
 		

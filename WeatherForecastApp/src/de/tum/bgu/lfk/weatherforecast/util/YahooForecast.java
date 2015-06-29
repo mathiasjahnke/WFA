@@ -27,6 +27,7 @@ public class YahooForecast {
 	 * @param code String
 	 * @param text String
 	 * @param day String
+	 * @param unit String
 	 */
 	public YahooForecast(String date, String high, String low, String code,
 			String text, String day, String unit) {
@@ -47,7 +48,7 @@ public class YahooForecast {
 
 	/**
 	 * set the date and replaces the abbreviation of the month with the full name.
-	 * @param date
+	 * @param date String
 	 */
 	public final void setDate(String date) {
 		if(date.matches(".*Jun.*")){
