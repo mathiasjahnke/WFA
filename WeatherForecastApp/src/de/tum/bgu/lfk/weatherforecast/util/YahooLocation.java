@@ -9,6 +9,7 @@ import processing.data.JSONObject;
 /**
  * to query yahoo location information based on lat and lon from Yahoo geo.placefinder.
  * stores basic location information lite country, state, city and woeid.
+ * to update and retrieve location information update() has to be called.
  * 
  * @author Mathias Jahnke, Technische Universit&auml;t M&uuml;nchen, <a href="http://www.lfk.bgu.tum.de">Chair of Cartography</a>
  * @version 0.0.1
@@ -24,25 +25,13 @@ public class YahooLocation {
 	private String woeid;
 	
 	/**
-	 * 
+	 * convenience constructor
 	 * @param p PApplet
 	 */
 	public YahooLocation(PApplet p){
 		this.p = p;
 	}
 	
-	/**
-	 * Convenience Constructor. 
-	 * lat and lon as parameters the object queries for the location information 
-	 * @param lat latitude
-	 * @param lon longitude
-	 * @param p PApplet
-	 */
-	public YahooLocation(float lat, float lon, PApplet p){
-		this.p = p;
-		update(lat, lon);
-	}
-
 	//**********Getter Setter***************
 	/**
 	 * 
@@ -181,6 +170,7 @@ public class YahooLocation {
 		city = this.city;
 		woeid = this.woeid;
 		
+		//TODO indicator if update() was able to retrieve a valid location or woeid
 		try{
 			JSONObject res1 = obj.getJSONObject("query");
 			JSONObject res2 = res1.getJSONObject("results");
@@ -191,7 +181,7 @@ public class YahooLocation {
 			this.woeid = res3.getString("woeid");
 		}catch (RuntimeException e){
 			System.out.println("Something went wrong with YahooLocation.update()");
-			System.out.println("ee:" + e.getMessage());
+			System.out.println("RE:" + e.getMessage());
 			this.country = country;
 			this.state = state;
 			this.city = city;

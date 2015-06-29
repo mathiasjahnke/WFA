@@ -11,7 +11,9 @@ import processing.data.*;
 
 /**
  * how to extract coordinates from the point and polygon shapefile ???
- * @author mjahnke
+ * @author Mathias Jahnke, Technische Universit&auml;t M&uuml;nchen, <a href="http://www.lfk.bgu.tum.de">Chair of Cartography</a>
+ * @version 0.0.1
+ * @since 26.06.2015
  *
  */
 
@@ -32,7 +34,7 @@ public class WeatherForecastApp extends PApplet{
 	private String curTemp;
 	private String curLocation;
 	
-	private YahooWeather yahooLoc;
+	private YahooWeather yahooWeather;
 	
 	
 	public void setup(){
@@ -58,17 +60,18 @@ public class WeatherForecastApp extends PApplet{
 		
 		//start location munich
 		//yahooLoc = new YahooLocation(48.135125f, 11.581981f, this);
-		yahooLoc = new YahooWeather(48.135125f, 11.581981f, this);
-		curLocation = yahooLoc.getCity();
+		yahooWeather = new YahooWeather(this);
+		yahooWeather.update(48.135125f, 11.581981f);
+		curLocation = yahooWeather.getCity();
 		
-		println("newLocation: " + yahooLoc.getCountry() + " : " + yahooLoc.getState() + " : " + yahooLoc.getCity() + " : " + yahooLoc.getWoeid());
+		println("newLocation: " + yahooWeather.getCountry() + " : " + yahooWeather.getState() + " : " + yahooWeather.getCity() + " : " + yahooWeather.getWoeid());
 		
 		
 		//location = getLocation(48.135125f,11.581981f);
 		//println(location);
 		//String woeid = getWoeid(location);
 		//weather = getWeather(yahooLoc.getWoeid());
-		condition = getCondition(yahooLoc.getWeather());
+		//condition = getCondition(yahooWeather.getWeather());
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
@@ -85,7 +88,8 @@ public class WeatherForecastApp extends PApplet{
 		text("Weather Forecast App", width/2, 23);
 		
 		
-		curTemp = condition.getString("temp") + "°";
+		//curTemp = condition.getString("temp") + "°";
+		curTemp = yahooWeather.getTemp() + "°";
 		textFont(curTempAtLoc);
 		textAlign(CENTER, CENTER);
 		text(curTemp, 818, 100);
@@ -109,86 +113,13 @@ public class WeatherForecastApp extends PApplet{
 	public void mouseClicked(){
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
 		println(pv);
-		yahooLoc.update(pv.x, pv.y);
+		yahooWeather.update(pv.x, pv.y);
 		//location = getLocation(pv.x, pv.y);
 		//String woeid = getWoeid(location);
 		
 		//weather = getWeather(yahooLoc.getWoeid());
-		condition = getCondition(yahooLoc.getWeather());
+		//condition = getCondition(yahooWeather.getWeather());
 		
 	
 	}
-		
-/*	private JSONObject getWeather(String woeid){
-		
-		//build YQL query
-		String yql1 = "select * from weather.forecast where woeid=\"";
-		//String woeid = "676757";
-		//String woeid1 = "12836562";
-		String yql2 = "\" AND u='c'";
-		String query = yql1 + woeid + yql2;
-		println("weather: " + query);
-		
-		//encode the YQL string for web usage
-		try{
-			query = URLEncoder.encode(query, "UTF-8");
-			
-		}catch(UnsupportedEncodingException e){
-			e.printStackTrace();
-		}finally{
-			
-		}
-		//println(query);
-		
-		//build URL with YQL string
-		String json1 = "http://query.yahooapis.com/v1/public/yql?q=";
-		String json2 = "&format=json";
-		String json = json1 + query + json2;
-		println("weather: " + json);
-		
-		//query results
-		JSONObject obj = loadJSONObject(json);
-		
-		return obj;
-	}
-	*/
-	
-	private JSONObject getCondition(JSONObject resObj){
-		JSONObject res1 = resObj.getJSONObject("query");
-		JSONObject res2 = res1.getJSONObject("results");
-		JSONObject res3 = res2.getJSONObject("channel");
-		JSONObject res4 = res3.getJSONObject("item");
-		JSONObject condition = res4.getJSONObject("condition");
-		println("***CONDITION***");
-		println(condition);
-		
-		return condition;
-	}
-	
-	private JSONArray getForecast(JSONObject resObj){
-		JSONObject res1 = resObj.getJSONObject("query");
-		//println(res1);
-		//println("##############################");
-		
-		JSONObject res2 = res1.getJSONObject("results");
-		//println(res2);
-		
-		JSONObject res3 = res2.getJSONObject("channel");
-		//println(res3);
-		
-		JSONObject res4 = res3.getJSONObject("item");
-		//println(res4);
-
-		JSONArray forecast = res4.getJSONArray("forecast");
-		//println(forecast);
-		
-		println("***FORECAST***");
-		for(int i = 0; i < forecast.size(); i++){
-			JSONObject j = forecast.getJSONObject(i);
-			println(j);
-		}
-		
-		return forecast;
-	}
-
 }
