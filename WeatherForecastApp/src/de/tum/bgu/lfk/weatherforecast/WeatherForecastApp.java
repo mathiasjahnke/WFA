@@ -7,7 +7,6 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
 import processing.core.PVector;
-import processing.data.*;
 
 /**
  * how to extract coordinates from the point and polygon shapefile ???
@@ -23,7 +22,6 @@ public class WeatherForecastApp extends PApplet{
 	private GeoMap geoMapCountries;
 	private GeoMap geoMapCities;
 	
-	private JSONObject condition; //the condition extracted from weather
 	private PImage yahooImage; 
 	
 	//different fonts
@@ -31,47 +29,44 @@ public class WeatherForecastApp extends PApplet{
 	private PFont credits;
 	private PFont curTempAtLoc; //current temperature at location
 	private PFont locationName;
+	
 	private String curTemp;
 	private String curLocation;
 	
 	private YahooWeather yahooWeather;
 	
+	private PVector clickedLocation;
 	
 	public void setup(){
-		size(900,500);
+		size(1200,700);
 		smooth();
 		
-		int offSetX = 10;
-		int offSetY = 60;
+		int offSetX = 10; //10
+		int offSetY = 60; //60
 		
 		//load countries
-		geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 726, 350, this);
+		//geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 726, 350, this);
+		geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 1000, 482, this);
 		geoMapCountries.readFile("C:/Users/Mathias/workspace/data/countries/cntry00");
 		
 		//load cities
-		geoMapCities = new GeoMap(offSetX + 30, offSetY + 11, 690, 265, this);
-		geoMapCities.readFile("C:/Users/Mathias/workspace/data/cities/cities");
+		//geoMapCities = new GeoMap(offSetX + 30, offSetY + 11, 690, 265, this);
+		//geoMapCities.readFile("C:/Users/Mathias/workspace/data/cities/cities");
 		
+		//create the different fonts
 		String fontName = "UniversLTStd-Light";
 		title = createFont(fontName, 30, true);
 		curTempAtLoc = createFont(fontName, 74, true);
-		locationName = createFont(fontName, 16, true);
+		locationName = createFont(fontName, 14, true);
 		
 		
 		//start location munich
-		//yahooLoc = new YahooLocation(48.135125f, 11.581981f, this);
 		yahooWeather = new YahooWeather(this);
-		yahooWeather.update(48.135125f, 11.581981f);
+		yahooWeather.update(11.581981f, 48.135125f);
 		curLocation = yahooWeather.getCity();
+		//clickedLocation = geoMapCountries.geoToScreen(48.135125f, 11.581981f);
+		clickedLocation = geoMapCountries.geoToScreen(11.581981f, 48.135125f);
 		
-		println("newLocation: " + yahooWeather.getCountry() + " : " + yahooWeather.getState() + " : " + yahooWeather.getCity() + " : " + yahooWeather.getWoeid());
-		
-		
-		//location = getLocation(48.135125f,11.581981f);
-		//println(location);
-		//String woeid = getWoeid(location);
-		//weather = getWeather(yahooLoc.getWoeid());
-		//condition = getCondition(yahooWeather.getWeather());
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
@@ -87,12 +82,15 @@ public class WeatherForecastApp extends PApplet{
 		textAlign(CENTER, CENTER);
 		text("Weather Forecast App", width/2, 23);
 		
-		
-		//curTemp = condition.getString("temp") + "°";
+		//draw current temperature and location
 		curTemp = yahooWeather.getTemp() + "°";
 		textFont(curTempAtLoc);
-		textAlign(CENTER, CENTER);
-		text(curTemp, 818, 100);
+		textAlign(LEFT, CENTER);
+		text(curTemp, 1030, 100);
+		
+		textFont(locationName);
+		textAlign(LEFT, CENTER);
+		text(yahooWeather.getCountry(), 1030, 145);
 		
 		//draw countries
 		strokeWeight(1);
@@ -101,25 +99,31 @@ public class WeatherForecastApp extends PApplet{
 		geoMapCountries.draw();
 		
 		//draw cities
-		strokeWeight(2);
-		fill(85);
-		geoMapCities.draw();
+		//strokeWeight(2);
+		//fill(85);
+		//geoMapCities.draw();
+		
+		//draw clicked location
+		ellipseMode(CENTER);
+		stroke(156, 13, 22);
+		fill(156, 13, 22);
+		ellipse(clickedLocation.x, clickedLocation.y, 6, 6);
 		
 		//draw powered by yahoo image 
 		image(yahooImage, width - yahooImage.width, height - yahooImage.height);
 		
 	}
 	
-	public void mouseClicked(){
+	public void mouseReleased(){
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
 		println(pv);
 		yahooWeather.update(pv.x, pv.y);
-		//location = getLocation(pv.x, pv.y);
-		//String woeid = getWoeid(location);
+		clickedLocation.x = mouseX;
+		clickedLocation.y = mouseY;
+		println(clickedLocation);
+		println("newLocation: " + yahooWeather.getCountry() + " : " + yahooWeather.getState() + " : " + yahooWeather.getCity() + " : " + yahooWeather.getWoeid());
 		
-		//weather = getWeather(yahooLoc.getWoeid());
-		//condition = getCondition(yahooWeather.getWeather());
 		
-	
+		
 	}
 }

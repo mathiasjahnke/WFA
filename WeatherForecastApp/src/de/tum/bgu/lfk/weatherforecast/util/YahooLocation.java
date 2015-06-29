@@ -8,7 +8,7 @@ import processing.data.JSONObject;
 
 /**
  * to query yahoo location information based on lat and lon from Yahoo geo.placefinder.
- * stores basic location information lite country, state, city and woeid.
+ * stores basic location information like country, state, city and woeid.
  * to update and retrieve location information update() has to be called.
  * 
  * @author Mathias Jahnke, Technische Universit&auml;t M&uuml;nchen, <a href="http://www.lfk.bgu.tum.de">Chair of Cartography</a>
@@ -120,7 +120,7 @@ public class YahooLocation {
 	 * @param lon longitude
 	 * @return processing.core.JSONObject
 	 */
-	private JSONObject getLocation(float lat, float lon){
+	private JSONObject getLocation(float lon, float lat){
 		
 		//build YQL query
 		String yql1 = "select * from geo.placefinder where text=\"";
@@ -153,14 +153,14 @@ public class YahooLocation {
 	
 	//**********Public Methods***************
 	/**
-	 * update the YhaooLocation object. retrieves the new location from geo.placefinder based on lat lon values. 
+	 * update the object. retrieves the new information from Yahoo tables based on lon lat values. 
 	 * Overrides the current information.
-	 * @param lat latitude
-	 * @param lon longitude
+	 * @param lat latitude (north-south)
+	 * @param lon longitude (east-west)
 	 */
-	public void update(float lat, float lon){
+	public void update(float lon, float lat){
 		
-		JSONObject obj = getLocation(lat, lon);
+		JSONObject obj = getLocation(lon, lat);
 		
 		String country, state, city, woeid;
 		

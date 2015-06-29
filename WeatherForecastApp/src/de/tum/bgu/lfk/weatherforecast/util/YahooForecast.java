@@ -50,10 +50,9 @@ public class YahooForecast {
 	 * @param date
 	 */
 	public final void setDate(String date) {
-		
-		if(date.matches("Jun")){
+		if(date.matches(".*Jun.*")){
 			this.date = date.replaceAll("Jun", "June");
-		}else if(date.matches("Jul")){
+		}else if(date.matches(".*Jul.*")){
 			this.date = date.replaceAll("Jul", "July");
 		}
 	}
@@ -100,22 +99,20 @@ public class YahooForecast {
 	 * @param day String
 	 */
 	public final void setDay(String day) {
-		if(day == "Sun"){
+		if(day.equals("Sun")){
 			this.day = "Sunday";
-		}else if (day == "Mon"){
+		}else if (day.equals("Mon")){
 			this.day = "Monday";
-		}else if (day == "Tue"){
+		}else if (day.equals("Tue")){
 			this.day = "Tuesday";
-		}else if (day == "Wed"){
+		}else if (day.equals("Wed")){
 			this.day = "Wednesday";
-		}else if (day == "Thu"){
+		}else if (day.equals("Thu")){
 			this.day = "Thursday";
-		}else if (day == "Fri"){
+		}else if (day.equals("Fri")){
 			this.day = "Friday";
-		}else if (day == "Sat"){
+		}else if (day.equals("Sat")){
 			this.day = "Saturday";
-		}else{
-			this.day = "noDay";
 		}
 	} 
 	

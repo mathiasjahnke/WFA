@@ -131,12 +131,18 @@ public class YahooWeather extends YahooLocation{
 		JSONObject res2 = res1.getJSONObject("results");
 		JSONObject res3 = res2.getJSONObject("channel");
 		JSONObject res4 = res3.getJSONObject("item");
-		JSONObject condition = res4.getJSONObject("condition");
-		
-		this.date = condition.getString("date");
-		this.temp = condition.getString("temp");
-		this.code = condition.getString("code");
-		this.text = condition.getString("text");
+		//TODO condition some time throws RuntimeException
+		JSONObject condition = null;
+		try{
+			condition = res4.getJSONObject("condition");
+			this.date = condition.getString("date");
+			this.temp = condition.getString("temp");
+			this.code = condition.getString("code");
+			this.text = condition.getString("text");
+		}catch(RuntimeException e){
+			System.out.println(e.getMessage());
+			System.out.println(resObj);
+		}
 	}
 	
 	/**
@@ -148,14 +154,22 @@ public class YahooWeather extends YahooLocation{
 		JSONObject res2 = res1.getJSONObject("results");
 		JSONObject res3 = res2.getJSONObject("channel");
 		JSONObject res4 = res3.getJSONObject("item");
-		JSONArray forecastArray = res4.getJSONArray("forecast");
 		
-		YahooForecast yf;
-		for(int i = 0; i < forecastArray.size(); i++){
-			JSONObject j = forecastArray.getJSONObject(i);
-			yf = new YahooForecast(j.getString("date"), j.getString("high"), j.getString("low"), j.getString("code"), j.getString("text"), j.getString("text"), "C");
-			this.forecast.add(yf);
+		
+		try{
+			JSONArray forecastArray = res4.getJSONArray("forecast");
+			YahooForecast yf;
+			for(int i = 0; i < forecastArray.size(); i++){
+				JSONObject j = forecastArray.getJSONObject(i);
+				yf = new YahooForecast(j.getString("date"), j.getString("high"), j.getString("low"), j.getString("code"), j.getString("text"), j.getString("day"), "C");
+				this.forecast.add(yf);
+			}
+		}catch(RuntimeException e){
+			System.out.println(e.getMessage());
+			System.out.println(resObj);
 		}
+		
+		
 	}
 	
 	//**********Public Methods***************
@@ -163,14 +177,12 @@ public class YahooWeather extends YahooLocation{
 	/**
 	 * overwrites the parent update(). but calls the parent one as well
 	 */
-	public void update(float lat, float lon){
-		
-		super.update(lat, lon);
+	public void update(float lon, float lat){
+		super.update(lon, lat);
+		forecast.clear();
 		weather = queryWeather(getWoeid());
 		setCondition(weather);
 		setForecast(weather);
-		System.out.println(weather);
-		System.out.println(this.forecast.size());
 	}
 
 }
