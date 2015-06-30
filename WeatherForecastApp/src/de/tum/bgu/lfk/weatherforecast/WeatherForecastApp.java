@@ -47,7 +47,12 @@ public class WeatherForecastApp extends PApplet{
 		//load countries
 		//geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 726, 350, this);
 		geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 1000, 482, this);
-		geoMapCountries.readFile("C:/Users/Mathias/workspace/data/countries/cntry00");
+		//Path notebook
+		String path = "C:/Users/mjahnke/Dropbox/UniA/Daten/countries/cntry00";
+		//path uni pc
+		//String path = "C:/Users/Mathias/workspace/data/countries/cntry00"
+		//geoMapCountries.readFile("C:/Users/Mathias/workspace/data/countries/cntry00");
+		geoMapCountries.readFile(path);
 		
 		//load cities
 		//geoMapCities = new GeoMap(offSetX + 30, offSetY + 11, 690, 265, this);
@@ -68,7 +73,8 @@ public class WeatherForecastApp extends PApplet{
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
-		String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+		//String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+		String icon = "C:/Users/mjahnke/Dropbox/UniA/Daten/plain_weather_icon/flat_colorful/png/" + yahooWeather.getCode() + ".png";
 		weatherIcon = loadImage(icon, "png");
 	}
 	
