@@ -23,6 +23,7 @@ public class WeatherForecastApp extends PApplet{
 	private GeoMap geoMapCities;
 	
 	private PImage yahooImage; 
+	private PImage weatherIcon;
 	
 	//different fonts
 	private PFont title;
@@ -31,7 +32,6 @@ public class WeatherForecastApp extends PApplet{
 	private PFont locationName;
 	
 	private String curTemp;
-	private String curLocation;
 	
 	private YahooWeather yahooWeather;
 	
@@ -63,12 +63,13 @@ public class WeatherForecastApp extends PApplet{
 		//start location munich
 		yahooWeather = new YahooWeather(this);
 		yahooWeather.update(11.581981f, 48.135125f);
-		curLocation = yahooWeather.getCity();
 		clickedLocation = geoMapCountries.geoToScreen(11.581981f, 48.135125f);
 		
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
+		String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+		weatherIcon = loadImage(icon, "png");
 	}
 	
 	
@@ -89,7 +90,11 @@ public class WeatherForecastApp extends PApplet{
 		
 		textFont(locationName);
 		textAlign(LEFT, CENTER);
-		text(yahooWeather.getCountry(), 1030, 145);
+		text(yahooWeather.getCity(), 1030, 145);
+		text(yahooWeather.getCountry(), 1030, 163);
+		
+		//draw icon
+		image(weatherIcon, 1030, 170);
 		
 		//draw countries
 		strokeWeight(1);
@@ -115,12 +120,16 @@ public class WeatherForecastApp extends PApplet{
 	
 	public void mouseReleased(){
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
-		println(pv);
-		yahooWeather.update(pv.x, pv.y);
-		clickedLocation.x = mouseX;
-		clickedLocation.y = mouseY;
-		println(clickedLocation);
-		println("newLocation: " + yahooWeather.getCountry() + " : " + yahooWeather.getState() + " : " + yahooWeather.getCity() + " : " + yahooWeather.getWoeid());
+		//println(pv);
+		boolean updateSuccessful;
+		updateSuccessful = yahooWeather.update(pv.x, pv.y);
+		if(updateSuccessful){
+			clickedLocation.x = mouseX;
+			clickedLocation.y = mouseY;
+		}
+		println(yahooWeather.getDate());
+		println(yahooWeather.getCode());
+		//println("newLocation: " + yahooWeather.getCountry() + " : " + yahooWeather.getState() + " : " + yahooWeather.getCity() + " : " + yahooWeather.getWoeid());
 		
 		
 		

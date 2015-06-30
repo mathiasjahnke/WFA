@@ -157,8 +157,9 @@ public class YahooLocation {
 	 * Overrides the current information.
 	 * @param lat latitude (north-south)
 	 * @param lon longitude (east-west)
+	 * @return true if new information could be retrieved otherwise false
 	 */
-	public void update(float lon, float lat){
+	public boolean update(float lon, float lat){
 		
 		JSONObject obj = getLocation(lon, lat);
 		
@@ -170,7 +171,8 @@ public class YahooLocation {
 		city = this.city;
 		woeid = this.woeid;
 		
-		//TODO indicator if update() was able to retrieve a valid location or woeid
+		boolean updateSuccessful;
+		
 		try{
 			JSONObject res1 = obj.getJSONObject("query");
 			JSONObject res2 = res1.getJSONObject("results");
@@ -179,6 +181,7 @@ public class YahooLocation {
 			this.state = res3.getString("state");
 			this.city = res3.getString("city");
 			this.woeid = res3.getString("woeid");
+			updateSuccessful = true;
 		}catch (RuntimeException e){
 			System.out.println("Something went wrong with YahooLocation.update()");
 			System.out.println("RE:" + e.getMessage());
@@ -186,8 +189,9 @@ public class YahooLocation {
 			this.state = state;
 			this.city = city;
 			this.woeid = woeid;
+			updateSuccessful = false;
 		}
-		
+		return updateSuccessful;
 	}
 
 

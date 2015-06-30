@@ -58,7 +58,35 @@ public class YahooWeather extends YahooLocation{
 		return date;
 	}
 
+	/**
+	 * Set the date String from the JSON output
+	 * replaces abbreviations of month (e.g. Jun to July) and weekdays (e.g. Mon to Monday) 
+	 * @param date a String representing the date
+	 */
 	public void setDate(String date) {
+		//Replace month
+		if(date.matches(".*Jun.*")){
+			date = date.replaceAll("Jun", "June");
+		}else if(date.matches(".*Jul.*")){
+			date = date.replaceAll("Jul", "July");
+		}
+		
+		//replace weekday
+		if(date.matches(".*Sun.*")){
+			date = date.replaceAll("Sun", "Sunday");
+		}else if(date.matches(".*Mon.*")){
+			date = date.replaceAll("Mon", "Monday");
+		}else if(date.matches(".*Tue.*")){
+			date = date.replaceAll("Tue", "Tuesday");
+		}else if(date.matches(".*Wed.*")){
+			date = date.replaceAll("Wed", "Wednesday");
+		}else if(date.matches(".*Thu.*")){
+			date = date.replaceAll("Thu", "Thursday");
+		}else if(date.matches(".*Fri.*")){
+			date = date.replaceAll("Fri", "Friday");
+		}else if(date.matches(".*Sat.*")){
+			date = date.replaceAll("Sat", "Saturday");
+		}
 		this.date = date;
 	}
 
@@ -131,11 +159,10 @@ public class YahooWeather extends YahooLocation{
 		JSONObject res2 = res1.getJSONObject("results");
 		JSONObject res3 = res2.getJSONObject("channel");
 		JSONObject res4 = res3.getJSONObject("item");
-		//TODO condition some time throws RuntimeException
 		JSONObject condition = null;
 		try{
 			condition = res4.getJSONObject("condition");
-			this.date = condition.getString("date");
+			setDate(condition.getString("date"));
 			this.temp = condition.getString("temp");
 			this.code = condition.getString("code");
 			this.text = condition.getString("text");
@@ -177,12 +204,16 @@ public class YahooWeather extends YahooLocation{
 	/**
 	 * overwrites the parent update(). but calls the parent one as well
 	 */
-	public void update(float lon, float lat){
-		super.update(lon, lat);
-		forecast.clear();
-		weather = queryWeather(getWoeid());
-		setCondition(weather);
-		setForecast(weather);
+	public boolean update(float lon, float lat){
+		boolean updateSuccessful;
+		updateSuccessful = super.update(lon, lat);
+		if(updateSuccessful){
+			forecast.clear();
+			weather = queryWeather(getWoeid());
+			setCondition(weather);
+			setForecast(weather);
+		}
+		return updateSuccessful;
 	}
 
 }
