@@ -30,6 +30,7 @@ public class WeatherForecastApp extends PApplet{
 	private PFont credits;
 	private PFont curTempAtLoc; //current temperature at location
 	private PFont locationName;
+	private PFont conditionText;
 	
 	private String curTemp;
 	
@@ -47,11 +48,11 @@ public class WeatherForecastApp extends PApplet{
 		//load countries
 		//geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 726, 350, this);
 		geoMapCountries = new GeoMap(offSetX + 0, offSetY + 0, 1000, 482, this);
+		
 		//Path notebook
-		String path = "C:/Users/mjahnke/Dropbox/UniA/Daten/countries/cntry00";
+		//String path = "C:/Users/mjahnke/Dropbox/UniA/Daten/countries/cntry00";
 		//path uni pc
-		//String path = "C:/Users/Mathias/workspace/data/countries/cntry00"
-		//geoMapCountries.readFile("C:/Users/Mathias/workspace/data/countries/cntry00");
+		String path = "C:/Users/Mathias/workspace/data/countries/cntry00";
 		geoMapCountries.readFile(path);
 		
 		//load cities
@@ -63,7 +64,7 @@ public class WeatherForecastApp extends PApplet{
 		title = createFont(fontName, 30, true);
 		curTempAtLoc = createFont(fontName, 74, true);
 		locationName = createFont(fontName, 14, true);
-		
+		conditionText = createFont(fontName, 18, true);
 		
 		//start location munich
 		yahooWeather = new YahooWeather(this);
@@ -73,8 +74,8 @@ public class WeatherForecastApp extends PApplet{
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
-		//String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/" + yahooWeather.getCode() + ".png";
-		String icon = "C:/Users/mjahnke/Dropbox/UniA/Daten/plain_weather_icon/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+		String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+		//String icon = "C:/Users/mjahnke/Dropbox/UniA/Daten/plain_weather_icon/flat_colorful/png/" + yahooWeather.getCode() + ".png";
 		weatherIcon = loadImage(icon, "png");
 	}
 	
@@ -88,19 +89,26 @@ public class WeatherForecastApp extends PApplet{
 		textAlign(CENTER, CENTER);
 		text("Weather Forecast App", width/2, 23);
 		
+		
+		
+		//draw icon
+		image(weatherIcon, 1050, 60);
+		
+		//condition text
+		textFont(conditionText);
+		textAlign(LEFT, CENTER);
+		text(yahooWeather.getText(), 1050, 65);
+		
 		//draw current temperature and location
 		curTemp = yahooWeather.getTemp() + "°";
 		textFont(curTempAtLoc);
 		textAlign(LEFT, CENTER);
-		text(curTemp, 1030, 100);
+		text(yahooWeather.getTemp() + "°", 1040, 180);
 		
 		textFont(locationName);
 		textAlign(LEFT, CENTER);
-		text(yahooWeather.getCity(), 1030, 145);
-		text(yahooWeather.getCountry(), 1030, 163);
-		
-		//draw icon
-		image(weatherIcon, 1030, 170);
+		text(yahooWeather.getCity(), 1040, 225, 140, 30);
+		text(yahooWeather.getCountry(), 1040, 243, 140, 60);
 		
 		//draw countries
 		strokeWeight(1);
@@ -125,6 +133,9 @@ public class WeatherForecastApp extends PApplet{
 	}
 	
 	public void mouseReleased(){
+		
+		
+		
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
 		//println(pv);
 		boolean updateSuccessful;
@@ -132,6 +143,15 @@ public class WeatherForecastApp extends PApplet{
 		if(updateSuccessful){
 			clickedLocation.x = mouseX;
 			clickedLocation.y = mouseY;
+			if(yahooWeather.getCode().equals("3200")){
+				String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/na.png";
+				//String icon = "C:/Users/mjahnke/Dropbox/UniA/Daten/plain_weather_icon/flat_colorful/png/na.png";
+				weatherIcon = loadImage(icon, "png");
+			}else{
+				String icon = "C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+				//String icon = "C:/Users/mjahnke/Dropbox/UniA/Daten/plain_weather_icon/flat_colorful/png/" + yahooWeather.getCode() + ".png";
+				weatherIcon = loadImage(icon, "png");
+			}
 		}
 		println(yahooWeather.getDate());
 		println(yahooWeather.getCode());
