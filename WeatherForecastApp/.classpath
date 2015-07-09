@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/core.jar">
+	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/core.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://processing.org/reference/javadoc/core/"/>
 		</attributes>
@@ -12,5 +12,9 @@
 			<attribute name="javadoc_location" value="file:/c:/Users/Mathias/workspace/libraries/geoMapDoc"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/jogl-all.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/jogl-all-natives-windows-amd64.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -27,6 +27,8 @@ public class YahooWeather extends YahooLocation{
 	private String temp;
 	private String code;
 	private String text;
+	private String sunrise;
+	private String sunset;
 	
 	private LinkedList<YahooForecast> forecast;
 	
@@ -42,6 +44,8 @@ public class YahooWeather extends YahooLocation{
 		temp = null;
 		code = null;
 		text = null;
+		sunrise = null;
+		sunset = null;
 		forecast = new LinkedList<YahooForecast>();
 	}
 	
@@ -114,6 +118,22 @@ public class YahooWeather extends YahooLocation{
 		this.text = text;
 	}
 	
+	public String getSunset(){
+		return this.sunset;
+	}
+	
+	public void setSunset(String sunset){
+		this.sunset = sunset;
+	}
+	
+	public String getSunrise(){
+		return this.sunrise;
+	}
+	
+	public void setSunrise(String sunrise){
+		this.sunrise = sunrise;
+	}
+	
 	/**
 	 * return a LinkedList of YahooForecast objects.
 	 * @return LinkedList
@@ -168,7 +188,25 @@ public class YahooWeather extends YahooLocation{
 			this.text = condition.getString("text");
 		}catch(RuntimeException e){
 			System.out.println(e.getMessage());
-			System.out.println(resObj);
+			System.out.println("setCondition: " + resObj);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param resObj
+	 */
+	private void setAstronomy(JSONObject resObj){
+		JSONObject res1 = resObj.getJSONObject("query");
+		JSONObject res2 = res1.getJSONObject("results");
+		JSONObject res3 = res2.getJSONObject("channel");
+		JSONObject res4 = res3.getJSONObject("astronomy");
+		try{
+			this.sunset = res4.getString("sunset");
+			this.sunrise = res4.getString("sunrise");
+		}catch(RuntimeException e){
+			System.out.println(e.getMessage());
+			System.out.println("setAstronomy: " + res4);
 		}
 	}
 	
@@ -193,10 +231,8 @@ public class YahooWeather extends YahooLocation{
 			}
 		}catch(RuntimeException e){
 			System.out.println(e.getMessage());
-			System.out.println(resObj);
+			System.out.println("setCondition: " + resObj);
 		}
-		
-		
 	}
 	
 	//**********Public Methods***************
@@ -212,6 +248,7 @@ public class YahooWeather extends YahooLocation{
 			weather = queryWeather(getWoeid());
 			setCondition(weather);
 			setForecast(weather);
+			setAstronomy(weather);
 		}
 		return updateSuccessful;
 	}
