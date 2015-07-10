@@ -9,7 +9,7 @@ import processing.data.JSONArray;
 import processing.data.JSONObject;
 
 /**
- * to query yahoo weather informationbased on woeid from Yahoo geo.placefinder and weather.forecast.
+ * to query Yahoo weather information based on woeid from Yahoo geo.placefinder and weather.forecast.
  * stores basic location and weather information like country, state, city, woeid, condition and a 5 day forecast.
  * to retrieve data update() has to be called
  * 
@@ -94,42 +94,82 @@ public class YahooWeather extends YahooLocation{
 		this.date = date;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTemp() {
 		return temp;
 	}
 
+	/**
+	 * 
+	 * @param temp
+	 */
 	public void setTemp(String temp) {
 		this.temp = temp;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * 
+	 * @param code
+	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * 
+	 * @param text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSunset(){
 		return this.sunset;
 	}
 	
+	/**
+	 * 
+	 * @param sunset
+	 */
 	public void setSunset(String sunset){
 		this.sunset = sunset;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSunrise(){
 		return this.sunrise;
 	}
 	
+	/**
+	 * 
+	 * @param sunrise
+	 */
 	public void setSunrise(String sunrise){
 		this.sunrise = sunrise;
 	}
@@ -143,6 +183,11 @@ public class YahooWeather extends YahooLocation{
 	}
 
 	//**********Private Methods***************
+	/**
+	 * 
+	 * @param woeid
+	 * @return
+	 */
 	private JSONObject queryWeather(String woeid){
 		
 		//build YQL query
@@ -252,5 +297,4 @@ public class YahooWeather extends YahooLocation{
 		}
 		return updateSuccessful;
 	}
-
 }

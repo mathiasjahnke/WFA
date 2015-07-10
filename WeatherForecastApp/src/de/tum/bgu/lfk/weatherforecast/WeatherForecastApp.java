@@ -157,10 +157,15 @@ public class WeatherForecastApp extends PApplet{
 		//draw separator between map and forecast
 		fill(0, 51, 89);
 		stroke(0, 51, 89);
-		rect(10, 542, 1180, 10);
+		rect(10, 542, 1180, 21);
+		textFont(weekday);
+		textAlign(LEFT, CENTER);
+		fill(255);
+		text("5 Day Forecast", 13, 552);
 		
 		drawForecast();
 		drawSunMoon();
+		drawForecastChart();
 		
 		//draw powered by yahoo image 
 		imageMode(CORNER);
@@ -217,17 +222,15 @@ public class WeatherForecastApp extends PApplet{
 		textAlign(CENTER, BASELINE);
 		for(int i = 0; i < 5; i++){
 			textFont(weekday);
-			text(yahooWeather.getForecast().get(i).getDay(), 100 + (i * 200), 570);
+			text(yahooWeather.getForecast().get(i).getDay(), 100 + (i * 200), 585);
 			textFont(forecastTemp);
-			text(yahooWeather.getForecast().get(i).getHigh() + "°", (100 + (i * 200)) - 20, 593);
-			drawArrowHigh((100 + (i * 200)) - 37, 593);
-			text(yahooWeather.getForecast().get(i).getLow() + "°", (100 + (i * 200)) + 20, 593);
-			drawArrowLow((100 + (i * 200)) + 3, 593);
+			text(yahooWeather.getForecast().get(i).getHigh() + "°", (100 + (i * 200)) - 20, 608);
+			drawArrowHigh((100 + (i * 200)) - 37, 608);
+			text(yahooWeather.getForecast().get(i).getLow() + "°", (100 + (i * 200)) + 20, 608);
+			drawArrowLow((100 + (i * 200)) + 3, 608);
 			imageMode(CENTER);
-			image(weatherIcons.getIcon(yahooWeather.getForecast().get(i).getCode()), 100 + (i * 200), 620, 50, 50);
+			image(weatherIcons.getIcon(yahooWeather.getForecast().get(i).getCode()), 100 + (i * 200), 635, 50, 50);
 		}
-		
-		drawForecastChart();
 	}
 	
 	private void drawArrowHigh(int x, int y){
@@ -256,30 +259,36 @@ public class WeatherForecastApp extends PApplet{
 	 * gluegen-rt-natives-windows-amd64.jar 
 	 */
 	private void drawForecastChart(){
+		//draw heading
+		textFont(weekday);
+		textAlign(LEFT, BASELINE);
+		fill(0, 51, 89);
+		text("Temperature Trend", 1038, 585);
+		
 		//minor x axis
 		stroke(221, 221, 221);
-		line(1058, 320, 1178, 320);
-		line(1058, 300, 1178, 300);
-		line(1058, 360, 1178, 360);
+		line(1058, 628, 1178, 628);
+		line(1058, 608, 1178, 608);
+		line(1058, 668, 1178, 668);
 		
 		stroke(0,51,89);
 		strokeWeight(1);
 		//y axis
-		line(1058, 280, 1058, 365);
+		line(1058, 593, 1058, 673);
 		//x axis
-		line(1058, 340, 1178, 340);
+		line(1058, 648, 1178, 648);
 		//x tick marks
 		for(int i = 0; i <= 4; i++){
-			line(1058 + (i * 30), 337, 1058 + (i * 30), 343);
+			line(1058 + (i * 30), 645, 1058 + (i * 30), 651);
 		}
 		
 		//y axis labels
 		textFont(axisLabel);
 		textAlign(RIGHT, CENTER);
-		text("-20°", 1055, 360);
-		text("0°", 1055, 340);
-		text("20°", 1055, 320);
-		text("40°", 1055, 300);
+		text("-20°", 1055, 668);
+		text("0°", 1055, 648);
+		text("20°", 1055, 628);
+		text("40°", 1055, 608);
 				
 		//curve high values
 		stroke(156, 13, 22);
@@ -287,13 +296,13 @@ public class WeatherForecastApp extends PApplet{
 		strokeWeight(2);
 		noFill();
 		beginShape();
-		curveVertex(1058, 340 - Integer.parseInt(yahooWeather.getForecast().get(0).getHigh()));
-		curveVertex(1058, 340 - Integer.parseInt(yahooWeather.getForecast().get(0).getHigh()));
-		curveVertex(1088, 340 - Integer.parseInt(yahooWeather.getForecast().get(1).getHigh()));
-		curveVertex(1118, 340 - Integer.parseInt(yahooWeather.getForecast().get(2).getHigh()));
-		curveVertex(1148, 340 - Integer.parseInt(yahooWeather.getForecast().get(3).getHigh()));
-		curveVertex(1178, 340 - Integer.parseInt(yahooWeather.getForecast().get(4).getHigh()));
-		curveVertex(1178, 340 - Integer.parseInt(yahooWeather.getForecast().get(4).getHigh()));
+		curveVertex(1058, 648 - Integer.parseInt(yahooWeather.getForecast().get(0).getHigh()));
+		curveVertex(1058, 648 - Integer.parseInt(yahooWeather.getForecast().get(0).getHigh()));
+		curveVertex(1088, 648 - Integer.parseInt(yahooWeather.getForecast().get(1).getHigh()));
+		curveVertex(1118, 648 - Integer.parseInt(yahooWeather.getForecast().get(2).getHigh()));
+		curveVertex(1148, 648 - Integer.parseInt(yahooWeather.getForecast().get(3).getHigh()));
+		curveVertex(1178, 648 - Integer.parseInt(yahooWeather.getForecast().get(4).getHigh()));
+		curveVertex(1178, 648 - Integer.parseInt(yahooWeather.getForecast().get(4).getHigh()));
 		endShape();
 		
 		//curve low values
@@ -301,13 +310,13 @@ public class WeatherForecastApp extends PApplet{
 		fill(0, 51,89);
 		noFill();
 		beginShape();
-		curveVertex(1058, 340 - Integer.parseInt(yahooWeather.getForecast().get(0).getLow()));
-		curveVertex(1058, 340 - Integer.parseInt(yahooWeather.getForecast().get(0).getLow()));
-		curveVertex(1088, 340 - Integer.parseInt(yahooWeather.getForecast().get(1).getLow()));
-		curveVertex(1118, 340 - Integer.parseInt(yahooWeather.getForecast().get(2).getLow()));
-		curveVertex(1148, 340 - Integer.parseInt(yahooWeather.getForecast().get(3).getLow()));
-		curveVertex(1178, 340 - Integer.parseInt(yahooWeather.getForecast().get(4).getLow()));
-		curveVertex(1178, 340 - Integer.parseInt(yahooWeather.getForecast().get(4).getLow()));
+		curveVertex(1058, 648 - Integer.parseInt(yahooWeather.getForecast().get(0).getLow()));
+		curveVertex(1058, 648 - Integer.parseInt(yahooWeather.getForecast().get(0).getLow()));
+		curveVertex(1088, 648 - Integer.parseInt(yahooWeather.getForecast().get(1).getLow()));
+		curveVertex(1118, 648 - Integer.parseInt(yahooWeather.getForecast().get(2).getLow()));
+		curveVertex(1148, 648 - Integer.parseInt(yahooWeather.getForecast().get(3).getLow()));
+		curveVertex(1178, 648 - Integer.parseInt(yahooWeather.getForecast().get(4).getLow()));
+		curveVertex(1178, 648 - Integer.parseInt(yahooWeather.getForecast().get(4).getLow()));
 		endShape();
 		
 		
