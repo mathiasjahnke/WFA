@@ -84,7 +84,6 @@ public class WeatherForecastApp extends PApplet{
 		yahooWeather = new YahooWeather(this);
 		yahooWeather.update(11.581981f, 48.135125f);
 		clickedLocation = geoMapCountries.geoToScreen(11.581981f, 48.135125f);
-		println(yahooWeather.getSunrise());
 		
 		//web service image
 		yahooImage = loadImage("https://poweredby.yahoo.com/purple.png", "png");
@@ -188,8 +187,8 @@ public class WeatherForecastApp extends PApplet{
 				weatherIcon = weatherIcons.getIcon(yahooWeather.getCode());
 			}
 		}
-		println(yahooWeather.getDate());
-		println(yahooWeather.getCode());
+		//println(yahooWeather.getDate());
+		//println(yahooWeather.getCode());
 		//println("newLocation: " + yahooWeather.getCountry() + " : " + yahooWeather.getState() + " : " + yahooWeather.getCity() + " : " + yahooWeather.getWoeid());
 	}
 	
@@ -199,7 +198,7 @@ public class WeatherForecastApp extends PApplet{
 		strokeWeight(1);
 		
 		//draw base line
-		line(1058, 500 , 1178, 500);
+		line(1058, 500 , 1176, 500);
 		
 		//draw arc
 		arc(1118, 500, 100, 100, PI, 2 * PI);
@@ -215,6 +214,10 @@ public class WeatherForecastApp extends PApplet{
 		fill(0, 51, 89);
 		text(yahooWeather.getSunrise(), 1068, 515);
 		text(yahooWeather.getSunset(), 1168, 515);
+		
+		//draw sun and moon icons
+		image(weatherIcons.getIcon("32"), 1058, 500, 25, 25);
+		image(weatherIcons.getIcon("31"), 1178, 500, 25, 25);
 	}
 	
 	private void drawForecast(){
@@ -263,7 +266,7 @@ public class WeatherForecastApp extends PApplet{
 		textFont(weekday);
 		textAlign(LEFT, BASELINE);
 		fill(0, 51, 89);
-		text("Temperature Trend", 1038, 585);
+		text("Trend", 1038, 585);
 		
 		//minor x axis
 		stroke(221, 221, 221);
