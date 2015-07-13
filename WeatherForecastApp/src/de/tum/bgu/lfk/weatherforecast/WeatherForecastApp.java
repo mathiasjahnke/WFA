@@ -1,7 +1,5 @@
 package de.tum.bgu.lfk.weatherforecast;
 
-import java.time.temporal.WeekFields;
-
 import org.gicentre.geomap.GeoMap;
 
 import de.tum.bgu.lfk.loadicons.FileExtensions;
@@ -13,6 +11,13 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 /**
+ * TODO include weekdays into Trend graphic make trend graphic a widget <br>
+ * TODO 5 day forecast as widgets including text (free positioning on screen)<br>
+ * TODO include where we are during sunrise and sunset in Sun and Moon graphics make this a widget<br>
+ * TODO heading for current condition<br>
+ * TODO if no code (3200) for current condition use the one from the forecast<br>
+ * TODO YahooLocation YahooWeather should be based on a YahooQuery class which takes a yql string for what ever query.<br>
+ * TODO more credits than only the powered by yahoo image<br>
  * 
  * @author Mathias Jahnke, Technische Universit&auml;t M&uuml;nchen, <a href="http://www.lfk.bgu.tum.de">Chair of Cartography</a>
  * @version 0.0.1
@@ -24,14 +29,14 @@ import processing.core.PVector;
 public class WeatherForecastApp extends PApplet{
 	
 	private GeoMap geoMapCountries;
-	private GeoMap geoMapCities;
+	//private GeoMap geoMapCities;
 	
 	private PImage yahooImage; 
 	private PImage weatherIcon;
 	
 	//different fonts
 	private PFont title;
-	private PFont credits;
+	//private PFont credits;
 	private PFont curTempAtLoc; //current temperature at location
 	private PFont locationName;
 	private PFont conditionText;
