@@ -2,19 +2,19 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/core.jar">
+	<classpathentry kind="lib" path="D:/workspace/libraries/Proc3.0/core.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://processing.org/reference/javadoc/core/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/geoMap.jar">
+	<classpathentry kind="lib" path="D:/workspace/libraries/geoMap.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/c:/Users/Mathias/workspace/libraries/geoMapDoc"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/jogl-all.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mathias/workspace/libraries/ProcJars/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/libraries/Proc3.0/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/libraries/Proc3.0/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/libraries/Proc3.0/jogl-all.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/libraries/Proc3.0/jogl-all-natives-windows-amd64.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
