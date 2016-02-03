@@ -59,7 +59,6 @@ public class WeatherForecastApp extends PApplet{
 	}
 	
 	public void setup(){
-		//size(1200,700);
 		smooth();
 		
 		int offSetX = 10; //10
@@ -175,7 +174,7 @@ public class WeatherForecastApp extends PApplet{
 		textFont(weekday);
 		textAlign(LEFT, CENTER);
 		fill(255);
-		text("5 Day Forecast", 13, 552);
+		text("5 Day Forecast", 13, 550);
 		
 		drawForecast();
 		drawSunMoon();
@@ -190,7 +189,7 @@ public class WeatherForecastApp extends PApplet{
 	public void mouseReleased(){
 		
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
-		println(pv);
+		//println(pv);
 		boolean updateSuccessful;
 		updateSuccessful = yahooWeather.update(pv.x, pv.y);
 		if(updateSuccessful){

@@ -18,7 +18,7 @@ import processing.data.JSONObject;
  * @since 26.06.2015
  *
  */
-public class YahooWeather extends YahooLocation{
+public class YahooWeather extends YahooWoeid{
 	
 	private JSONObject weather;
 	

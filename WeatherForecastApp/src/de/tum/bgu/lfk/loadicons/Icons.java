@@ -2,6 +2,7 @@ package de.tum.bgu.lfk.loadicons;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -81,8 +82,15 @@ public class Icons {
 			return icons.get(key);
 		}else{
 			return null;
-		}
-		
+		}		
+	}
+	
+	/**
+	 * return the keyset of the icons
+	 * @return HashSet<String>
+	 */
+	public HashSet<String> getKeys(){
+		return (HashSet<String>) icons.keySet();
 	}
 	
 	/**

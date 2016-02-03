@@ -7,28 +7,24 @@ import processing.core.PApplet;
 import processing.data.JSONObject;
 
 /**
- * to query yahoo location information based on lat and lon from Yahoo geo.placefinder.
- * stores basic location information like country, state, city and woeid.
- * to update and retrieve location information update() has to be called.
+ * to query yahoo woeid based on lattitude and longitude from Yahoo ugeo.reversegeocode.
+ * to update and retrieve woeid update() has to be called.
  * 
  * @author Mathias Jahnke, Technische Universit&auml;t M&uuml;nchen, <a href="http://www.lfk.bgu.tum.de">Chair of Cartography</a>
  * @version 0.0.1
  * @since 26.06.2015
  *
  */
-public class YahooLocation {
+public class YahooWoeid {
 	
 	private PApplet p;
-//	private String city;
-//	private String state;
-//	private String country;
 	private String woeid;
 	
 	/**
 	 * convenience constructor
 	 * @param p PApplet
 	 */
-	public YahooLocation(PApplet p){
+	public YahooWoeid(PApplet p){
 		this.p = p;
 		this.woeid = "56210702"; //valentin karlstadt museum, munich, germany
  	}
