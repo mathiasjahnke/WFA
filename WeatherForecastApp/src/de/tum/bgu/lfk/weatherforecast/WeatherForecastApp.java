@@ -25,7 +25,7 @@ import processing.core.PVector;
  *
  */
 
-@SuppressWarnings("serial")
+//@SuppressWarnings("serial")
 public class WeatherForecastApp extends PApplet{
 	
 	private GeoMap geoMapCountries;
@@ -50,8 +50,16 @@ public class WeatherForecastApp extends PApplet{
 	
 	private Icons weatherIcons; 
 	
+	public static void main(String[] args){
+		PApplet.main(WeatherForecastApp.class.getName());
+	}
+	
+	public void settings(){
+		size(1200, 700);
+	}
+	
 	public void setup(){
-		size(1200,700);
+		//size(1200,700);
 		smooth();
 		
 		int offSetX = 10; //10
@@ -64,7 +72,7 @@ public class WeatherForecastApp extends PApplet{
 		//Path notebook
 		//String path = "C:/Users/mjahnke/Dropbox/UniA/Daten/countries/cntry00";
 		//path uni pc
-		String path = "C:/Users/Mathias/workspace/data/countries/cntry00";
+		String path = "D:/workspace/data/countries/cntry00";
 		geoMapCountries.readFile(path);
 		
 		//load cities
@@ -73,7 +81,7 @@ public class WeatherForecastApp extends PApplet{
 		
 		//load icon files
 		weatherIcons= new Icons(this);
-		weatherIcons.loadIcons("C:/Users/Mathias/workspace/data/plain_weather_icons/flat_colorful/png/", FileExtensions.PNG);
+		weatherIcons.loadIcons("D:/workspace/data/plain_weather_icons/flat_colorful/png/", FileExtensions.PNG);
 		
 		//create the different fonts
 		String fontName = "UniversLTStd-Light";
@@ -88,6 +96,8 @@ public class WeatherForecastApp extends PApplet{
 		//start location munich
 		yahooWeather = new YahooWeather(this);
 		yahooWeather.update(11.581981f, 48.135125f);
+		yahooWeather.setCity("Munich");
+		yahooWeather.setCountry("Germany");
 		clickedLocation = geoMapCountries.geoToScreen(11.581981f, 48.135125f);
 		
 		//web service image
@@ -180,7 +190,7 @@ public class WeatherForecastApp extends PApplet{
 	public void mouseReleased(){
 		
 		PVector pv = geoMapCountries.screenToGeo(mouseX, mouseY);
-		//println(pv);
+		println(pv);
 		boolean updateSuccessful;
 		updateSuccessful = yahooWeather.update(pv.x, pv.y);
 		if(updateSuccessful){

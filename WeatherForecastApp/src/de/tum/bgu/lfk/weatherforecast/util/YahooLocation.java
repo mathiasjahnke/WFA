@@ -19,9 +19,9 @@ import processing.data.JSONObject;
 public class YahooLocation {
 	
 	private PApplet p;
-	private String city;
-	private String state;
-	private String country;
+//	private String city;
+//	private String state;
+//	private String country;
 	private String woeid;
 	
 	/**
@@ -30,7 +30,8 @@ public class YahooLocation {
 	 */
 	public YahooLocation(PApplet p){
 		this.p = p;
-	}
+		this.woeid = "56210702"; //valentin karlstadt museum, munich, germany
+ 	}
 	
 	//**********Getter Setter***************
 	/**
@@ -47,54 +48,6 @@ public class YahooLocation {
 	 */
 	public void setP(PApplet p){
 		this.p = p;
-	}
-	
-	/**
-	 * 
-	 * @return String 
-	 */
-	public String getCity() {
-		return city;
-	}
-
-	/**
-	 * 
-	 * @param city String
-	 */
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	/**
-	 * 
-	 * @return String
-	 */
-	public String getState() {
-		return state;
-	}
-
-	/**
-	 * 
-	 * @param state String
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	/**
-	 * 
-	 * @return String
-	 */
-	public String getCountry() {
-		return country;
-	}
-
-	/**
-	 * 
-	 * @param country String
-	 */
-	public void setCountry(String country) {
-		this.country = country;
 	}
 
 	/**
@@ -120,14 +73,12 @@ public class YahooLocation {
 	 * @param lon longitude
 	 * @return processing.core.JSONObject
 	 */
-	private JSONObject getLocation(float lon, float lat){
+	private JSONObject getWOEID(float lon, float lat){
 		
 		//build YQL query
-		String yql1 = "select * from geo.placefinder where text=\"";
-		String latLon = Float.toString(lat) + "," + Float.toString(lon);
-		String yql2 = "\" AND gflags=\"R\"";
-		String query = yql1 + latLon + yql2;
-
+		String query = "select * from ugeo.reversegeocode where latitude=" + Float.toString(lat) + 
+				" and longitude=" + Float.toString(lon) + " and appname='your-assigned-appname'";
+		
 		//encode the YQL string for web usage
 		try{
 			query = URLEncoder.encode(query, "UTF-8");
@@ -153,22 +104,19 @@ public class YahooLocation {
 	
 	//**********Public Methods***************
 	/**
-	 * update the object. retrieves the new information from Yahoo tables based on lon lat values. 
-	 * Overrides the current information.
+	 * update the woeid. retrieves the new woeid from Yahoo tables (ugeo.reversegeocode) based on longitude and latitude values. 
+	 * if a woeid is found it overrides the old woeid, if not the old woeid stays.
 	 * @param lat latitude (north-south)
 	 * @param lon longitude (east-west)
-	 * @return true if new information could be retrieved otherwise false
+	 * @return true if new woeid could be retrieved otherwise false
 	 */
 	public boolean update(float lon, float lat){
 		
-		JSONObject obj = getLocation(lon, lat);
+		JSONObject obj = getWOEID(lon, lat);
 		
-		String country, state, city, woeid;
+		String woeid;
 		
-		//save the old state
-		country = this.country;
-		state = this.state;
-		city = this.city;
+		//save the old woeid
 		woeid = this.woeid;
 		
 		boolean updateSuccessful;
@@ -176,18 +124,16 @@ public class YahooLocation {
 		try{
 			JSONObject res1 = obj.getJSONObject("query");
 			JSONObject res2 = res1.getJSONObject("results");
-			JSONObject res3 = res2.getJSONObject("Result");
-			this.country = res3.getString("country");
-			this.state = res3.getString("state");
-			this.city = res3.getString("city");
-			this.woeid = res3.getString("woeid");
+			JSONObject res3 = res2.getJSONObject("result");
+			JSONObject locations = res3.getJSONObject("locations");
+			JSONObject woe = locations.getJSONObject("woe"); 
+			
+			this.woeid = woe.getString("id");
+			
 			updateSuccessful = true;
 		}catch (RuntimeException e){
 			System.out.println("Something went wrong with YahooLocation.update()");
 			System.out.println("RE:" + e.getMessage());
-			this.country = country;
-			this.state = state;
-			this.city = city;
 			this.woeid = woeid;
 			updateSuccessful = false;
 		}

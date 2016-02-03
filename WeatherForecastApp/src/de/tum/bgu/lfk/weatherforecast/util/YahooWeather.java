@@ -22,6 +22,11 @@ public class YahooWeather extends YahooLocation{
 	
 	private JSONObject weather;
 	
+	//Location information
+	private String city;
+	private String country;
+	
+	
 	//Condition
 	private String date;
 	private String temp;
@@ -47,6 +52,9 @@ public class YahooWeather extends YahooLocation{
 		sunrise = null;
 		sunset = null;
 		forecast = new LinkedList<YahooForecast>();
+		
+		city = null;
+		country = null;
 	}
 	
 	//**********Getter Setter***************
@@ -94,6 +102,39 @@ public class YahooWeather extends YahooLocation{
 		this.date = date;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * 
+	 * @param temp
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
+	public String getCountry() {
+		return country;
+	}
+
+	/**
+	 * 
+	 * @param temp
+	 */
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -276,7 +317,22 @@ public class YahooWeather extends YahooLocation{
 			}
 		}catch(RuntimeException e){
 			System.out.println(e.getMessage());
-			System.out.println("setCondition: " + resObj);
+			System.out.println("setForecast: " + resObj);
+		}
+	}
+	
+	private void setLocation(JSONObject resObj){
+		JSONObject res1 = resObj.getJSONObject("query");
+		JSONObject res2 = res1.getJSONObject("results");
+		JSONObject res3 = res2.getJSONObject("channel");
+		JSONObject location = res3.getJSONObject("location");
+		
+		try{
+			this.city = location.getString("city");
+			this.country = location.getString("country");
+		}catch(RuntimeException e){
+			System.out.println(e.getMessage());
+			System.out.println("setLocation: " + location);
 		}
 	}
 	
@@ -294,6 +350,8 @@ public class YahooWeather extends YahooLocation{
 			setCondition(weather);
 			setForecast(weather);
 			setAstronomy(weather);
+			setLocation(weather);
+			
 		}
 		return updateSuccessful;
 	}
