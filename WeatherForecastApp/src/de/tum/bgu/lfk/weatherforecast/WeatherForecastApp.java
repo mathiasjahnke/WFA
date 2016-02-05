@@ -16,8 +16,11 @@ import processing.core.PVector;
  * TODO include where we are during sunrise and sunset in Sun and Moon graphics make this a widget<br>
  * TODO heading for current condition<br>
  * TODO if no code (3200) for current condition use the one from the forecast<br>
- * TODO YahooLocation YahooWeather should be based on a YahooQuery class which takes a yql string for what ever query.<br>
+ * TODO YahooWOEID YahooWeather should be based on a YahooQuery class which takes a yql string for what ever query.<br>
  * TODO more credits than only the powered by yahoo image<br>
+ * 
+ * https://developer.yahoo.com/yql/console/#h=select+*+from+ugeo.reversegeocode+where+latitude%3D51.924683+and+longitude%3D10.799988+and+appname%3D%22your-assigned-appname%22
+ * https://developer.yahoo.com/yql/console/?q=select%20*%20from%20yql.tables%20where%20name%20like%20%22%25yahoo%25%22&env=store://datatables.org/alltableswithkeys#h=select+*+from+yahoo.finance.quotes+where+symbol+in+%28%22YHOO%22%2C%22AAPL%22%2C%22GOOG%22%2C%22MSFT%22%29
  * 
  * @author Mathias Jahnke, Technische Universit&auml;t M&uuml;nchen, <a href="http://www.lfk.bgu.tum.de">Chair of Cartography</a>
  * @version 0.0.1
